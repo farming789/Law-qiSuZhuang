@@ -5,9 +5,16 @@ from langchain.prompts import ChatPromptTemplate
 from langchain.output_parsers import PydanticOutputParser
 from pydantic import BaseModel, Field
 from typing import List, Optional
+from dotenv import load_dotenv
 import docx
 import io
 
+# 获取通义千问 API Key
+load_dotenv()
+api_key = os.getenv("DASHSCOPE_API_KEY")
+os.environ["DASHSCOPE_API_KEY"] = api_key
+if not api_key:
+    api_key = st.text_input("请输入你的 通义千问 API Key (DashScope):", type="password")
 # --- 1. 定义数据结构 (Pydantic Models) ---
 # 定义清晰的数据模型，用于规范LLM的输出，确保数据格式的统一和稳定
 
@@ -165,10 +172,6 @@ def generate_docx(data: Lawsuit, template_path: str) -> Optional[bytes]:
 st.set_page_config(page_title="起诉状格式转换工具", layout="wide")
 st.title("⚖️ 起诉状智能格式转换工具")
 
-# 获取通义千问 API Key
-api_key = os.getenv("DASHSCOPE_API_KEY")
-if not api_key:
-    api_key = st.text_input("请输入你的 通义千问 API Key (DashScope):", type="password")
 
 
 # 文件上传

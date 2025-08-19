@@ -6,4 +6,8 @@ pydantic
 python-docx
 unstructured[docx]
 lxml
+websocket-client
+websocket
+websockets
+python-dotenv
 annotated-types
